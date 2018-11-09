@@ -1,5 +1,4 @@
-obj/
-test_obj/
-test_runner
+*.o
+tester
 tracer
 .vscode/
