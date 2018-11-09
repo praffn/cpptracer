@@ -1,7 +1,9 @@
 #include <cmath>
 
 #include "catch.hpp"
-#include "vec3.hpp"
+#include "../src/linalg/vec3.hpp"
+
+using namespace tracer::linalg;
 
 TEST_CASE("vector addition", "[vector]") {
   Vec3 a(1.0, 2.0, 3.0);

@@ -2,6 +2,8 @@
 
 #include "vec3.hpp"
 
+namespace tracer::linalg {
+
 class Ray {
  public:
   Vec3 origin;
@@ -12,3 +14,5 @@ class Ray {
 
   Vec3 pointAt(float distance);
 };
+
+}

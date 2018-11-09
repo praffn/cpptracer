@@ -2,16 +2,20 @@
 
 #include "shape.hpp"
 
+namespace tracer::geom {
+
 class Sphere : public Shape {
  private:
-  Vec3 center;
+  linalg::Vec3 center;
   float radius;
  public:
-  Sphere(Vec3 center, float radius);
+  Sphere(linalg::Vec3 center, float radius);
 
   bool hit(
-    Ray ray,
+    linalg::Ray ray,
     float min_distance,
     float max_distance,
     Hit *out_hit);
 };
+
+}  // namespace tracer::geom

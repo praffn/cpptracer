@@ -1,57 +1,36 @@
 TARGET = tracer
 
 SRC_DIR = src
-INC_DIR = inc
-OBJ_DIR = obj
 
-CC = g++
-CFLAGS = -std=c++11 -Wall -I$(INC_DIR)
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall
 
-SRCS = $(wildcard $(SRC_DIR)/*.cpp)
-OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+SRCS = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp)
+OBJS = $(SRCS:.cpp=.o)
 
 $(TARGET): $(OBJS)
-	@echo "🚧 Building target '$@'"
-	@$(CC) $(CFLAGS) -o $@ $^
-	@echo "✅ Done building target '$@'"
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@echo "\t🚧 Building object '$@'"
-	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c -o $@ $<
-	@echo "\t✅ Done building object '$@'"
+	$(CXX) $(CXXFLAGS) -o $@ $^
+	@echo "Done building target '$@'"
 
 # test
-T_TARGET = test_runner
-T_SRC_DIR = test
-T_OBJ_DIR = test_obj
-T_SRCS = $(wildcard $(T_SRC_DIR)/*.cpp)
-T_OBJS = $(T_SRCS:$(T_SRC_DIR)/%.cpp=$(T_OBJ_DIR)/%.o)
+TEST_TARGET = tester
+TEST_SRC_DIR = test
+TEST_SRCS = $(wildcard $(TEST_SRC_DIR)/*.cpp)
+TEST_OBJS = $(TEST_SRCS:.cpp=.o)
 
-$(T_TARGET): $(T_OBJS) $(filter-out $(OBJ_DIR)/main.o, $(OBJS))
-	@echo "🚧 Building target '$@'"
-	@$(CC) $(CFLAGS) -o $@ $^
-	@echo "✅ Done building target '$@'"
-
-$(T_OBJ_DIR)/%.o: $(T_SRC_DIR)/%.cpp
-	@echo "\t🚧 Building object '$@'"
-	@mkdir -p $(T_OBJ_DIR)
-	@$(CC) $(CFLAGS) -c -o $@ $<
-	@echo "\t✅ Done building object '$@'"
-
-
+$(TEST_TARGET): $(TEST_OBJS) $(filter-out $(SRC_DIR)/main.o, $(OBJS))
+	$(CXX) $(CXXFLAGS) -o $@ $^
+	@echo "Done building tester"
 
 .PHONY: clean
 clean:
-	@rm -rf $(OBJ_DIR)
-	@rm -f $(TARGET)
-	@rm -rf $(T_OBJ_DIR)
-	@rm -f $(T_TARGET)
+	@rm -f $(TARGET) $(OBJS)
+	@rm -f $(TEST_TARGET) $(TEST_OBJS)
 	@echo "done cleaning up"
 
-.PHONY: test
-test: $(T_TARGET)
+.PHONY: test_build
+test_build: $(TEST_TARGET)
 
-.PHONY: run_test
-run_test: test
-	./$(T_TARGET)
+.PHONY: test
+test: test_build
+	@./$(TEST_TARGET)

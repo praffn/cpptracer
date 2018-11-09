@@ -1,6 +1,10 @@
 #include <cmath>
 
 #include "sphere.hpp"
+#include "../linalg/ray.hpp"
+#include "../linalg/vec3.hpp"
+
+namespace tracer::geom {
 
 bool min_gt_zero(float a, float b, float *out) {
   if (a < 0.0 && b < 0.0) return false;
@@ -8,15 +12,15 @@ bool min_gt_zero(float a, float b, float *out) {
   return true;
 }
 
-Sphere::Sphere(Vec3 center, float radius) :
+Sphere::Sphere(linalg::Vec3 center, float radius) :
   center(center), radius(radius) {}
 
 bool Sphere::hit(
-  Ray ray,
+  linalg::Ray ray,
   float min_distance,
   float max_distance,
   Hit *out_hit) {
-  Vec3 o = ray.origin - center;
+  linalg::Vec3 o = ray.origin - center;
   float a = ray.direction.mag2();
   float b = o.dot(ray.direction) * 2.0;
   float c = o.mag2() - radius*radius;
@@ -29,3 +33,5 @@ bool Sphere::hit(
   }
   return false;
 }
+
+}  // namespace tracer::geom

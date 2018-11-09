@@ -1,7 +1,10 @@
 #include "catch.hpp"
-#include "vec3.hpp"
-#include "shape.hpp"
-#include "sphere.hpp"
+#include "../src/linalg/vec3.hpp"
+#include "../src/geom/shape.hpp"
+#include "../src/geom/sphere.hpp"
+
+using namespace tracer::linalg;
+using namespace tracer::geom;
 
 TEST_CASE("ray should hit sphere") {
   Sphere s(

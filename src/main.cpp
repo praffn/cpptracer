@@ -1,17 +1,22 @@
 #include <iostream>
-#include "vec3.hpp"
-#include "sphere.hpp"
-#include "ray.hpp"
-#include "shape.hpp"
+
+#include "linalg/vec3.hpp"
+#include "linalg/ray.hpp"
+#include "geom/shape.hpp"
+#include "geom/sphere.hpp"
+
+using namespace tracer;
 
 int main() {
-  Sphere sphere(
-    Vec3(0.0, 0.0, 3.0),
+  geom::Sphere sphere(
+    linalg::Vec3(0.0, 0.0, 3.0),
     2.5);
 
-  Ray ray(Vec3(0.0, 0.0, 0.0), Vec3(0.0, 0.0, 1.0).normalize_copy());
+  linalg::Ray ray(
+    linalg::Vec3(0.0, 0.0, 0.0),
+    linalg::Vec3(0.0, 0.0, 1.0).normalize_copy());
 
-  Hit hit;
+  geom::Hit hit;
   if (sphere.hit(ray, 1.0, 100.0, &hit)) {
     std::cout << "hit! distance: " << hit.distance << std::endl;
   } else {

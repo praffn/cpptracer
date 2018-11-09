@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+namespace tracer::linalg {
+
 class Vec3 {
  private:
   float x, y, z;
@@ -37,3 +39,5 @@ class Vec3 {
 
   friend std::ostream& operator<<(std::ostream& o, const Vec3& v);
 };
+
+}

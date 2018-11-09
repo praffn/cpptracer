@@ -3,6 +3,8 @@
 
 #include "vec3.hpp"
 
+namespace tracer::linalg {
+
 float fround(float n, int precision) {
   int decimals = std::pow(10, precision);
   return (std::round(n * decimals)) / decimals;
@@ -87,4 +89,6 @@ float Vec3::mag2() const {
 
 float Vec3::mag() const {
   return sqrtf(mag2());
+}
+
 }
